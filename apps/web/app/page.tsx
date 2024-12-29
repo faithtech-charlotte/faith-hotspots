@@ -1,6 +1,9 @@
+"use client";
+
 import Image, { type ImageProps } from "next/image";
 import { Button } from "@repo/ui/button";
 import styles from "./page.module.css";
+import { useEffect } from "react";
 
 type Props = Omit<ImageProps, "src"> & {
   srcLight: string;
@@ -19,6 +22,24 @@ const ThemeImage = (props: Props) => {
 };
 
 export default function Home() {
+
+  useEffect(() => {
+    if ("geolocation" in navigator) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const latitude = position.coords.latitude;
+          const longitude = position.coords.longitude;
+          console.log("Location:", { latitude, longitude });
+        },
+        (error) => {
+          console.error("Error getting location:", error.message);
+        }
+      );
+    } else {
+      console.log("Geolocation is not supported by this browser");
+    }
+  }, []);
+
   return (
     <div className={styles.page}>
       <main className={styles.main}>
