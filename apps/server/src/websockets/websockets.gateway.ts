@@ -22,4 +22,10 @@ export class WebsocketsGateway implements OnGatewayInit, OnGatewayConnection, On
   handleMessage(client: Socket, payload: any): string {
     return 'Hello world!';
   }
+
+  @SubscribeMessage('registration')
+  handleRegistration(client: Socket, payload: any): string {
+    this.logger.log('Client registration received', payload);
+    return 'Hello registered client!';
+  }
 }
